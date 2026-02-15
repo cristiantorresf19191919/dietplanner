@@ -130,6 +130,156 @@ const DAYS: Day[] = [
 
 const WEEK_TOTALS = { kcal: 17547, prot: 1327.9, carb: 1841.9, grasas: 554.4 };
 
+const CASCADE_DURATION = 0.6;
+const CASCADE_STAGGER = 0.08;
+
+/* ── Loader Screen ────────────────────────────────────────── */
+function Loader({ onComplete }: { onComplete: () => void }) {
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setFadeOut(true), 1800);
+    const t2 = setTimeout(onComplete, 2300);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [onComplete]);
+
+  return (
+    <div style={{
+      position: "fixed", inset: 0, zIndex: 200,
+      background: "#0D0F18",
+      display: "flex", flexDirection: "column",
+      alignItems: "center", justifyContent: "center", gap: 28,
+      opacity: fadeOut ? 0 : 1,
+      transition: "opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+      pointerEvents: fadeOut ? "none" : "auto",
+    }}>
+      {/* Animated rings */}
+      <div style={{ position: "relative", width: 80, height: 80 }}>
+        <div className="loader-ring-outer" style={{
+          position: "absolute", inset: 0,
+          border: "3px solid transparent",
+          borderTopColor: "#4EEBC2",
+          borderRightColor: "#4EEBC2",
+          borderRadius: "50%",
+          animation: "loaderSpin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite",
+        }} />
+        <div className="loader-ring-inner" style={{
+          position: "absolute", inset: 12,
+          border: "3px solid transparent",
+          borderBottomColor: "#E88CED",
+          borderLeftColor: "#E88CED",
+          borderRadius: "50%",
+          animation: "loaderSpin 0.9s cubic-bezier(0.5, 0, 0.5, 1) infinite reverse",
+        }} />
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 28,
+          animation: "loaderPulse 1.8s ease-in-out infinite",
+        }}>🥗</div>
+      </div>
+
+      {/* Text */}
+      <div style={{ textAlign: "center" }}>
+        <div style={{
+          fontSize: 20, fontWeight: 800, letterSpacing: -0.3,
+          background: "linear-gradient(135deg, #4EEBC2, #E88CED)",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+          animation: "loaderPulse 1.8s ease-in-out infinite",
+        }}>
+          Mi Dieta
+        </div>
+        <div style={{
+          fontSize: 11, color: "rgba(255,255,255,0.3)",
+          letterSpacing: 3, textTransform: "uppercase", fontWeight: 600,
+          marginTop: 8,
+        }}>
+          Cargando plan semanal
+        </div>
+      </div>
+
+      {/* Progress dots */}
+      <div style={{ display: "flex", gap: 6 }}>
+        {[0, 1, 2].map(i => (
+          <div key={i} style={{
+            width: 6, height: 6, borderRadius: "50%",
+            background: "#4EEBC2",
+            animation: `loaderDot 1.4s ease-in-out ${i * 0.2}s infinite`,
+          }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+function Footer() {
+  return (
+    <footer className="footer-wrap" style={{
+      position: "relative", zIndex: 2,
+      maxWidth: 900, margin: "0 auto",
+      padding: "0 28px 32px",
+    }}>
+      {/* Gradient divider */}
+      <div style={{
+        height: 1, marginBottom: 28,
+        background: "linear-gradient(90deg, transparent, rgba(78,235,194,0.2) 30%, rgba(232,140,237,0.2) 70%, transparent)",
+      }} />
+
+      <div style={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        flexWrap: "wrap", gap: 16,
+      }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          <span style={{
+            fontSize: 10, color: "rgba(255,255,255,0.25)",
+            textTransform: "uppercase", letterSpacing: 2, fontWeight: 700,
+          }}>
+            Creado por
+          </span>
+          <a
+            href="https://agencypartner2.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+            style={{
+              fontSize: 15, fontWeight: 700, letterSpacing: -0.2,
+              background: "linear-gradient(135deg, #4EEBC2, #E88CED)",
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              textDecoration: "none",
+              transition: "opacity 0.3s ease",
+            }}
+          >
+            CristianScript
+          </a>
+        </div>
+
+        <a
+          href="https://agencypartner2.netlify.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-cta"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            padding: "10px 20px", borderRadius: 12,
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            color: "rgba(255,255,255,0.5)",
+            fontSize: 13, fontWeight: 600,
+            textDecoration: "none",
+            transition: "all 0.3s ease",
+          }}
+        >
+          <span>¿Necesitas más páginas?</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7v10" />
+          </svg>
+        </a>
+      </div>
+    </footer>
+  );
+}
+
 /* ── Circular Progress Ring ───────────────────────────────── */
 function ProgressRing({ value, max, size = 140, strokeWidth = 10, color }: {
   value: number; max: number; size?: number; strokeWidth?: number; color: string;
@@ -166,9 +316,10 @@ function ProgressRing({ value, max, size = 140, strokeWidth = 10, color }: {
 }
 
 /* ── Meal Card (pill-style) ───────────────────────────────── */
-function MealCard({ meal, checked, onToggle, index }: {
-  meal: Meal; checked: boolean; onToggle: () => void; index: number;
+function MealCard({ meal, checked, onToggle, index, cascadeDelay }: {
+  meal: Meal; checked: boolean; onToggle: () => void; index: number; cascadeDelay?: number;
 }) {
+  const isCascade = cascadeDelay !== undefined;
   return (
     <div
       className="meal-card"
@@ -181,7 +332,10 @@ function MealCard({ meal, checked, onToggle, index }: {
         border: `1px solid ${checked ? meal.color + "55" : "rgba(255,255,255,0.06)"}`,
         borderRadius: 16, padding: "14px 18px", cursor: "pointer",
         transition: "all .3s ease",
-        animation: `slideUp .5s ${index * 0.06}s both ease`,
+        opacity: isCascade ? 0 : undefined,
+        animation: isCascade
+          ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${cascadeDelay}s both`
+          : `slideUp .5s ${index * 0.06}s both ease`,
         position: "relative", overflow: "hidden",
       }}
     >
@@ -278,7 +432,7 @@ function DayPill({ day, isActive, isComplete, onClick, color }: {
       style={{
         display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
         padding: "10px 6px", border: "none", cursor: "pointer",
-        background: "transparent", position: "relative",
+        background: "transparent", position: "relative", fontFamily: "inherit",
         transition: "transform .2s ease",
         transform: isActive ? "scale(1.08)" : "scale(1)",
       }}
@@ -377,7 +531,16 @@ export default function DietPlanner() {
     return init;
   });
   const [showModal, setShowModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showLoader) {
+      const t = setTimeout(() => setIsFirstLoad(false), 1600);
+      return () => clearTimeout(t);
+    }
+  }, [showLoader]);
 
   const toggle = (di: number, mi: number) => {
     setChecked(prev => ({ ...prev, [`${di}-${mi}`]: !prev[`${di}-${mi}`] }));
@@ -405,7 +568,7 @@ export default function DietPlanner() {
       fontFamily: "'Outfit', 'SF Pro Display', sans-serif",
       color: "#fff",
       position: "relative",
-      overflow: "hidden",
+      overflowX: "hidden",
     }}>
       <style>{`
         @keyframes slideUp { from { opacity:0; transform:translateY(16px) } to { opacity:1; transform:translateY(0) } }
@@ -413,10 +576,48 @@ export default function DietPlanner() {
         @keyframes popIn { from { opacity:0; transform:scale(.9) } to { opacity:1; transform:scale(1) } }
         @keyframes pulse { 0%,100% { opacity:.6 } 50% { opacity:1 } }
         @keyframes gradientShift { 0% { background-position:0% 50% } 50% { background-position:100% 50% } 100% { background-position:0% 50% } }
+        @keyframes cascadeIn {
+          from { opacity: 0; transform: translateY(28px) scale(0.98); filter: blur(2px); }
+          to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+        @keyframes loaderSpin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        @keyframes loaderPulse {
+          0%, 100% { opacity: 0.6; transform: scale(0.95); }
+          50% { opacity: 1; transform: scale(1.05); }
+        }
+        @keyframes loaderDot {
+          0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+          40% { opacity: 1; transform: scale(1.2); }
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+        /* Hover effects */
+        .meal-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+          border-color: rgba(255,255,255,0.1) !important;
+        }
+        .meal-card:active {
+          transform: translateY(0) scale(0.995);
+        }
+        .footer-link:hover { opacity: 0.8; }
+        .footer-cta:hover {
+          background: rgba(255,255,255,0.06) !important;
+          border-color: rgba(78,235,194,0.15) !important;
+          color: #4EEBC2 !important;
+        }
+        .stat-card:hover {
+          transform: translateY(-2px);
+          border-color: rgba(255,255,255,0.1) !important;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
         @media (max-width: 600px) {
           .meal-card { flex-wrap: wrap !important; gap: 8px !important; padding: 12px 14px !important; }
           .meal-card .meal-pill { order: 1; }
@@ -428,9 +629,13 @@ export default function DietPlanner() {
           .macro-bars { flex-direction: column !important; }
           .modal-inner { padding: 24px 20px !important; margin: 0 16px; max-width: calc(100vw - 32px); }
           .header-wrap { padding: 16px 16px 0 !important; }
-          .content-wrap { padding: 16px 16px 80px !important; }
+          .content-wrap { padding: 16px 16px 40px !important; }
+          .footer-wrap { padding: 0 16px 24px !important; }
+          .footer-cta { width: 100%; justify-content: center !important; }
         }
       `}</style>
+
+      {showLoader && <Loader onComplete={() => setShowLoader(false)} />}
 
       {/* BG Texture */}
       <div style={{
@@ -451,6 +656,8 @@ export default function DietPlanner() {
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           marginBottom: 24,
+          opacity: isFirstLoad ? 0 : 1,
+          animation: isFirstLoad ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${0 * CASCADE_STAGGER}s both` : "none",
         }}>
           <div>
             <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", letterSpacing: 2, fontWeight: 700, textTransform: "uppercase", marginBottom: 4 }}>
@@ -479,16 +686,20 @@ export default function DietPlanner() {
         {/* Week Stats Strip */}
         <div style={{
           display: "flex", gap: 10, marginBottom: 22, flexWrap: "wrap",
+          opacity: isFirstLoad ? 0 : 1,
+          animation: isFirstLoad ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${1 * CASCADE_STAGGER}s both` : "none",
         }}>
           {[
             { label: "Días completados", val: `${completedDays}/7`, color: "#4EEBC2" },
             { label: "Comidas hechas", val: `${totalChecked}/42`, color: "#F5B971" },
             { label: "Semana kcal", val: WEEK_TOTALS.kcal.toLocaleString(), color: "#E88CED" },
           ].map((s, i) => (
-            <div key={i} style={{
+            <div key={i} className="stat-card" style={{
               flex: 1, minWidth: 120, padding: "12px 16px", borderRadius: 14,
               background: "rgba(255,255,255,0.025)",
               border: "1px solid rgba(255,255,255,0.06)",
+              transition: "all 0.3s ease",
+              cursor: "default",
             }}>
               <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: 1, fontWeight: 700, marginBottom: 4 }}>{s.label}</div>
               <div style={{ fontSize: 20, fontWeight: 800, color: s.color, fontFamily: "'JetBrains Mono', monospace" }}>{s.val}</div>
@@ -503,6 +714,8 @@ export default function DietPlanner() {
           borderRadius: 20, padding: "8px 12px",
           border: "1px solid rgba(255,255,255,0.05)",
           marginBottom: 6,
+          opacity: isFirstLoad ? 0 : 1,
+          animation: isFirstLoad ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${2 * CASCADE_STAGGER}s both` : "none",
         }}>
           {DAYS.map((d, i) => (
             <DayPill
@@ -517,14 +730,15 @@ export default function DietPlanner() {
 
       {/* Day Content */}
       <div className="content-wrap" ref={contentRef} style={{
-        maxWidth: 900, margin: "0 auto", padding: "20px 28px 100px",
+        maxWidth: 900, margin: "0 auto", padding: "20px 28px 40px",
         position: "relative", zIndex: 2,
       }}>
         {/* Day Header */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           marginBottom: 20,
-          animation: "slideUp .4s ease",
+          opacity: isFirstLoad ? 0 : 1,
+          animation: isFirstLoad ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${3 * CASCADE_STAGGER}s both` : "slideUp .4s ease",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <div style={{
@@ -568,7 +782,8 @@ export default function DietPlanner() {
           padding: "16px 20px", borderRadius: 18,
           background: "rgba(255,255,255,0.02)",
           border: "1px solid rgba(255,255,255,0.05)",
-          animation: "slideUp .4s .05s both ease",
+          opacity: isFirstLoad ? 0 : 1,
+          animation: isFirstLoad ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${4 * CASCADE_STAGGER}s both` : "slideUp .4s .05s both ease",
         }}>
           <div style={{ width: "100%", display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 4 }}>
             <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: 1, fontWeight: 700 }}>Macros del día</span>
@@ -594,6 +809,7 @@ export default function DietPlanner() {
               checked={checked[`${activeDay}-${mi}`]}
               onToggle={() => toggle(activeDay, mi)}
               index={mi}
+              cascadeDelay={isFirstLoad ? 5 * CASCADE_STAGGER + mi * 0.07 : undefined}
             />
           ))}
         </div>
@@ -630,6 +846,9 @@ export default function DietPlanner() {
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <Footer />
 
       {showModal && <CompletionModal count={totalChecked} onClose={() => setShowModal(false)} />}
     </div>
