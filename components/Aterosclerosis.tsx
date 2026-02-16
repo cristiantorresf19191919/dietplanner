@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import DietProgressTracker from "./DietProgressTracker";
 
 export default function Aterosclerosis() {
   const [activeSection, setActiveSection] = useState(0);
@@ -1004,6 +1005,9 @@ export default function Aterosclerosis() {
               </div>
             </div>
           </div>
+
+          {/* Progress Tracker */}
+          <DietProgressTracker dietType="aterosclerosis" />
         </div>
       </section>
 

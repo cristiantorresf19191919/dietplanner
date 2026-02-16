@@ -1,12 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useUserProfile } from "@/context/UserProfileContext";
 import DietPlanner from "@/components/DietPlanner";
 import Aterosclerosis from "@/components/Aterosclerosis";
 import ResistenciaInsulina from "@/components/ResistenciaInsulina";
+import UserProfileForm from "@/components/UserProfileForm";
 
 export default function Home() {
   const [view, setView] = useState<"diet" | "aterosclerosis" | "insulina">("diet");
+  const [showProfileForm, setShowProfileForm] = useState(false);
+  const { hasProfile, nutritionalNeeds } = useUserProfile();
 
   return (
     <div style={{ position: "relative" }}>
@@ -96,8 +100,70 @@ export default function Home() {
         </button>
       </div>
 
+      {/* Profile Button */}
+      {hasProfile && (
+        <div
+          style={{
+            position: "fixed",
+            top: 20,
+            left: 20,
+            zIndex: 1000,
+            display: "flex",
+            gap: "10px",
+            flexDirection: "column",
+          }}
+        >
+          <button
+            onClick={() => setShowProfileForm(true)}
+            style={{
+              padding: "10px 16px",
+              background: "linear-gradient(135deg, #4EEBC2, #E88CED)",
+              border: "none",
+              borderRadius: "12px",
+              color: "#0D0F18",
+              cursor: "pointer",
+              fontSize: "0.9rem",
+              fontWeight: 700,
+              transition: "all 0.3s ease",
+              fontFamily: "'Outfit', sans-serif",
+              boxShadow: "0 4px 16px rgba(78, 235, 194, 0.3)",
+            }}
+          >
+            👤 Mi Perfil
+          </button>
+          {nutritionalNeeds && (
+            <div
+              style={{
+                padding: "12px",
+                background: "rgba(13, 15, 24, 0.95)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                borderRadius: "12px",
+                color: "#fff",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                fontFamily: "'Outfit', sans-serif",
+                display: "flex",
+                flexDirection: "column",
+                gap: "6px",
+              }}
+            >
+              <div>🔥 {nutritionalNeeds.targetCalories} cal</div>
+              <div>💪 {nutritionalNeeds.protein}g P</div>
+              <div>🍞 {nutritionalNeeds.carbs}g C</div>
+              <div>🥑 {nutritionalNeeds.fats}g G</div>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Content */}
       {view === "diet" ? <DietPlanner /> : view === "aterosclerosis" ? <Aterosclerosis /> : <ResistenciaInsulina />}
+
+      {/* Profile Form */}
+      {(!hasProfile || showProfileForm) && (
+        <UserProfileForm onComplete={() => setShowProfileForm(false)} />
+      )}
 
       <style jsx global>{`
         @media (max-width: 768px) {

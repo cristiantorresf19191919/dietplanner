@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import DietProgressTracker from "./DietProgressTracker";
 
 interface Meal {
   name: string;
@@ -845,6 +846,11 @@ export default function DietPlanner() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Progress Tracker */}
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 28px" }}>
+        <DietProgressTracker dietType="general" />
       </div>
 
       {/* Footer */}

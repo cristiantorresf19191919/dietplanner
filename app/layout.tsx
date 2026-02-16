@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { UserProfileProvider } from "@/context/UserProfileContext";
 
 export const metadata: Metadata = {
-  title: "Mi Dieta - Plan Semanal",
-  description: "Plan de dieta semanal con seguimiento de macros y comidas",
+  title: "Mi Dieta Personalizada - Plan Nutricional Científico",
+  description: "Plan de dieta personalizado basado en ciencia nutricional con seguimiento de macros, para aterosclerosis y resistencia a la insulina",
 };
 
 export const viewport: Viewport = {
@@ -20,7 +21,9 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
       </head>
-      <body style={{ margin: 0 }}>{children}</body>
+      <body style={{ margin: 0 }}>
+        <UserProfileProvider>{children}</UserProfileProvider>
+      </body>
     </html>
   );
 }
