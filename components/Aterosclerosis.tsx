@@ -1076,44 +1076,98 @@ export default function Aterosclerosis() {
         }
 
         @media (max-width: 1024px) {
-          .hero-animation {
-            width: 150px !important;
-            height: 150px !important;
+          nav > div {
+            padding: 0 16px !important;
+          }
+
+          section {
+            padding: 80px 20px !important;
           }
         }
 
         @media (max-width: 768px) {
+          /* Container adjustments */
+          body {
+            overflow-x: hidden;
+          }
+
           /* Navigation */
+          nav {
+            padding: 12px 0 !important;
+          }
+
+          nav > div {
+            padding: 0 12px !important;
+            gap: 8px !important;
+          }
+
+          nav button {
+            padding: 8px 16px !important;
+            font-size: 0.85rem !important;
+          }
+
+          nav button span:first-child {
+            font-size: 1.1rem !important;
+          }
+
           .nav-text {
-            display: none;
+            display: none !important;
           }
 
           /* Hero section */
+          section:first-of-type {
+            min-height: 90vh !important;
+            padding: 60px 16px !important;
+          }
+
+          section:first-of-type > div {
+            padding: 0 16px !important;
+          }
+
           .hero-stats {
             gap: 20px !important;
+            flex-direction: column !important;
+            width: 100%;
+          }
+
+          .hero-stats > div {
+            width: 100% !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
           }
 
           /* Two column layouts */
           .two-column,
           .vs-container {
-            grid-template-columns: 1fr !important;
+            display: flex !important;
+            flex-direction: column !important;
             gap: 30px !important;
           }
 
           /* Process flow - make scrollable */
           .process-flow {
+            display: flex !important;
             overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: thin !important;
+            padding: 20px 10px !important;
+            margin: 0 -16px !important;
+            scroll-snap-type: x mandatory !important;
+          }
+
+          .process-flow > * {
+            flex-shrink: 0 !important;
+            scroll-snap-align: center !important;
           }
 
           .process-flow::-webkit-scrollbar {
-            height: 6px;
+            height: 6px !important;
           }
 
           .process-flow::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-radius: 3px !important;
           }
 
           /* Timeline */
@@ -1121,28 +1175,34 @@ export default function Aterosclerosis() {
             padding-left: 30px !important;
           }
 
-          /* Grids */
+          .timeline > div {
+            margin-bottom: 30px !important;
+          }
+
+          /* All grids become single column */
           .comparison-grid,
           .key-grid,
           .objectives-grid,
           .food-grid,
           .forbidden-grid,
-          .supplements-grid {
-            grid-template-columns: 1fr !important;
-          }
-
-          .days-grid {
-            grid-template-columns: 1fr !important;
-          }
-
+          .supplements-grid,
+          .days-grid,
           .video-grid {
-            grid-template-columns: 1fr !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
           }
 
           /* VS section */
-          .vs-vs {
+          .vs-container {
+            display: flex !important;
+            flex-direction: column !important;
+          }
+
+          .vs-container > div:nth-child(2) {
             font-size: 2rem !important;
-            margin: 20px 0;
+            margin: 20px 0 !important;
+            text-align: center !important;
           }
 
           /* Section padding */
@@ -1150,22 +1210,25 @@ export default function Aterosclerosis() {
             padding: 60px 16px !important;
           }
 
+          section > div {
+            width: 100% !important;
+          }
+
           /* Content boxes */
-          .danger-box,
-          .warning-box,
-          .success-box,
-          .info-box,
-          .key-box,
-          .objectives-box,
-          .supplements-box,
-          .commandments-box,
-          .weekly-plan {
+          div[style*="background: linear-gradient(135deg, rgba(239, 68, 68"],
+          div[style*="background: linear-gradient(135deg, rgba(251, 191, 36"],
+          div[style*="background: linear-gradient(135deg, rgba(59, 130, 246"],
+          div[style*="background: linear-gradient(135deg, rgba(16, 185, 129"],
+          div[style*="background: rgba(59, 130, 246"],
+          div[style*="background: linear-gradient(135deg, rgba(139, 92, 246"] {
             padding: 24px !important;
+            margin: 20px 0 !important;
           }
 
           /* Table rows */
-          .table-row {
-            grid-template-columns: 1fr !important;
+          div[style*="display: grid"][style*="gridTemplateColumns"] {
+            display: flex !important;
+            flex-direction: column !important;
             gap: 15px !important;
           }
 
@@ -1175,16 +1238,25 @@ export default function Aterosclerosis() {
           }
 
           /* Font sizes */
-          .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4rem) !important;
+          h1 {
+            font-size: clamp(2.5rem, 10vw, 4rem) !important;
           }
 
-          .section-title {
-            font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+          h2 {
+            font-size: clamp(1.8rem, 7vw, 2.5rem) !important;
           }
 
-          .subtitle {
-            font-size: 1.4rem !important;
+          h3 {
+            font-size: clamp(1.4rem, 5vw, 1.8rem) !important;
+          }
+
+          h4 {
+            font-size: clamp(1.1rem, 4vw, 1.3rem) !important;
+          }
+
+          p {
+            font-size: clamp(0.95rem, 3.5vw, 1.1rem) !important;
+            line-height: 1.7 !important;
           }
 
           /* Stat cards */
@@ -1192,132 +1264,215 @@ export default function Aterosclerosis() {
             padding: 20px 30px !important;
           }
 
-          /* Day cards min-width */
-          .day-card {
-            min-width: auto !important;
+          /* Images */
+          img {
+            max-width: 100% !important;
+            height: auto !important;
+          }
+
+          /* Video modal */
+          div[style*="position: fixed"][style*="zIndex: 1000"] {
+            padding: 16px !important;
+          }
+
+          div[style*="position: fixed"][style*="zIndex: 1000"] video {
+            max-width: 100% !important;
+            width: 100% !important;
           }
         }
 
         @media (max-width: 480px) {
-          /* Hero */
-          .hero-animation {
+          /* Hero section smaller */
+          section:first-of-type {
+            min-height: 85vh !important;
+            padding: 40px 12px !important;
+          }
+
+          section:first-of-type > div {
+            padding: 0 12px !important;
+          }
+
+          /* Hero animation */
+          section:first-of-type > div > div:first-child {
             width: 120px !important;
             height: 120px !important;
-            margin-bottom: 24px !important;
+            margin-bottom: 20px !important;
           }
 
+          /* Hero title */
+          h1 {
+            font-size: clamp(2rem, 12vw, 3rem) !important;
+            margin-bottom: 16px !important;
+          }
+
+          /* Hero subtitle */
+          section:first-of-type p {
+            font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
+            margin-bottom: 40px !important;
+          }
+
+          /* Stats */
           .hero-stats {
-            flex-direction: column !important;
-            gap: 16px !important;
-            width: 100%;
+            gap: 12px !important;
           }
 
-          .stat-card {
-            width: 100% !important;
+          .hero-stats > div {
             padding: 16px 24px !important;
           }
 
-          /* Navigation pills */
-          .nav-pill {
-            padding: 8px 16px !important;
-            font-size: 0.85rem !important;
+          .hero-stats > div > div:first-child {
+            font-size: 2.5rem !important;
           }
 
-          .nav-icon {
+          .hero-stats > div > div:last-child {
+            font-size: 0.8rem !important;
+          }
+
+          /* Navigation */
+          nav {
+            padding: 10px 0 !important;
+          }
+
+          nav > div {
+            padding: 0 8px !important;
+            gap: 6px !important;
+          }
+
+          nav button {
+            padding: 6px 12px !important;
+            font-size: 0.8rem !important;
+          }
+
+          nav button span:first-child {
             font-size: 1rem !important;
           }
 
-          /* Section padding */
+          /* Sections */
           section {
             padding: 40px 12px !important;
           }
 
-          .section-header {
-            margin-bottom: 40px !important;
+          /* Section headers */
+          section > div > div:first-child {
+            margin-bottom: 30px !important;
           }
 
-          .section-icon {
-            font-size: 3rem !important;
+          section > div > div:first-child > span {
+            font-size: 2.5rem !important;
           }
 
-          /* Content boxes */
-          .danger-box,
-          .warning-box,
-          .success-box,
-          .info-box,
-          .key-box,
-          .objectives-box,
-          .supplements-box,
-          .commandments-box,
-          .weekly-plan,
-          .highlight-box {
-            padding: 20px !important;
+          /* All content boxes */
+          div[style*="padding: 30px"],
+          div[style*="padding: 40px"] {
+            padding: 16px !important;
           }
 
-          /* Flow cards */
-          .flow-card {
-            padding: 20px !important;
-            min-width: 240px !important;
+          /* Process flow cards */
+          .process-flow > div {
+            min-width: 260px !important;
+            padding: 16px !important;
           }
 
-          .flow-number {
+          .process-flow > div > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 1.1rem !important;
+          }
+
+          .process-flow > span {
+            font-size: 1.5rem !important;
+          }
+
+          /* Timeline */
+          .timeline {
+            padding-left: 16px !important;
+          }
+
+          .timeline > div {
+            margin-bottom: 24px !important;
+            gap: 16px !important;
+          }
+
+          .timeline > div > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 1rem !important;
+          }
+
+          /* Food/diet cards */
+          div[style*="height: 180px"] {
+            height: 140px !important;
+          }
+
+          div[style*="padding: 20px"] {
+            padding: 16px !important;
+          }
+
+          /* Day cards */
+          div[style*="borderLeft"] {
+            padding: 16px !important;
+          }
+
+          div[style*="borderLeft"] h4 {
+            font-size: 1.3rem !important;
+          }
+
+          /* Commandments/list items */
+          div[style*="flexDirection: column"] div[style*="width: 50px"] {
             width: 40px !important;
             height: 40px !important;
             font-size: 1.2rem !important;
           }
 
-          /* Timeline */
-          .timeline {
-            padding-left: 20px !important;
-          }
-
-          .timeline-marker {
-            width: 40px !important;
-            height: 40px !important;
-            font-size: 1.1rem !important;
-          }
-
-          /* Food cards */
-          .food-image {
-            height: 140px !important;
-          }
-
-          .food-content {
-            padding: 16px !important;
-          }
-
-          /* Weekly plan */
-          .weekly-title {
-            font-size: 1.8rem !important;
-          }
-
-          .day-card {
-            padding: 20px !important;
-          }
-
-          .day-name {
-            font-size: 1.4rem !important;
-          }
-
           /* Footer */
           footer {
-            padding: 40px 16px !important;
+            padding: 32px 12px !important;
           }
 
-          .footer-text {
-            font-size: 1.1rem !important;
+          footer p:first-child {
+            font-size: 1rem !important;
           }
 
-          /* Commandment */
-          .commandment {
-            flex-direction: column !important;
-            align-items: center !important;
-            text-align: center;
+          footer p:last-child {
+            font-size: 0.9rem !important;
           }
 
-          .commandment-number {
-            width: 44px !important;
-            height: 44px !important;
+          /* Video modal */
+          div[style*="position: fixed"][style*="zIndex: 1000"] {
+            padding: 12px !important;
+          }
+
+          div[style*="position: fixed"][style*="zIndex: 1000"] > div {
+            max-width: 100% !important;
+          }
+
+          /* Buttons in modal */
+          div[style*="position: fixed"] button {
+            top: -40px !important;
+            font-size: 1.2rem !important;
+          }
+
+          /* Comparison images */
+          div[style*="height: 200px"] {
+            height: 160px !important;
+          }
+
+          /* Macrophage animation */
+          div[style*="width: 150px"][style*="height: 150px"] {
+            width: 120px !important;
+            height: 120px !important;
+          }
+
+          /* LDL/HDL particles */
+          div[style*="width: 80px"][style*="height: 80px"] {
+            width: 60px !important;
+            height: 60px !important;
+          }
+
+          /* Bubbles in foam cell */
+          div[style*="width: 20px"][style*="height: 20px"] {
+            width: 16px !important;
+            height: 16px !important;
           }
         }
 

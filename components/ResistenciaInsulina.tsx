@@ -1353,65 +1353,117 @@ export default function ResistenciaInsulina() {
         }
 
         @media (max-width: 1024px) {
-          .hero-animation {
-            width: 150px !important;
-            height: 150px !important;
+          nav > div {
+            padding: 0 16px !important;
+          }
+
+          section {
+            padding: 80px 20px !important;
           }
         }
 
         @media (max-width: 768px) {
+          /* Container adjustments */
+          body {
+            overflow-x: hidden;
+          }
+
           /* Navigation */
+          nav {
+            padding: 12px 0 !important;
+          }
+
+          nav > div {
+            padding: 0 12px !important;
+            gap: 8px !important;
+          }
+
+          nav button {
+            padding: 8px 16px !important;
+            font-size: 0.85rem !important;
+          }
+
+          nav button span:first-child {
+            font-size: 1.1rem !important;
+          }
+
           .nav-text {
-            display: none;
+            display: none !important;
           }
 
           /* Hero section */
+          section:first-of-type {
+            min-height: 90vh !important;
+            padding: 60px 16px !important;
+          }
+
+          section:first-of-type > div {
+            padding: 0 16px !important;
+          }
+
           .hero-stats {
             gap: 20px !important;
+            flex-direction: column !important;
+            width: 100%;
+          }
+
+          .hero-stats > div {
+            width: 100% !important;
+            max-width: 400px !important;
+            margin: 0 auto !important;
           }
 
           /* Two column layouts */
           .two-column {
-            grid-template-columns: 1fr !important;
+            display: flex !important;
+            flex-direction: column !important;
             gap: 30px !important;
           }
 
           /* Process flows - make scrollable */
           .process-normal,
-          .process-flow,
-          .resistance-flow {
+          .resistance-flow,
+          .conversion-flow {
+            display: flex !important;
             overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: thin !important;
+            padding: 20px 10px !important;
+            margin: 0 -16px !important;
+            scroll-snap-type: x mandatory !important;
+          }
+
+          .process-normal > *,
+          .resistance-flow > *,
+          .conversion-flow > * {
+            flex-shrink: 0 !important;
+            scroll-snap-align: center !important;
           }
 
           .process-normal::-webkit-scrollbar,
-          .process-flow::-webkit-scrollbar,
-          .resistance-flow::-webkit-scrollbar {
-            height: 6px;
+          .resistance-flow::-webkit-scrollbar,
+          .conversion-flow::-webkit-scrollbar {
+            height: 6px !important;
           }
 
           .process-normal::-webkit-scrollbar-thumb,
-          .process-flow::-webkit-scrollbar-thumb,
-          .resistance-flow::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
+          .resistance-flow::-webkit-scrollbar-thumb,
+          .conversion-flow::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2) !important;
+            border-radius: 3px !important;
           }
 
-          /* Grids */
+          /* All grids become single column */
           .bad-food-grid,
           .fat-types-grid,
           .cancer-mechanisms,
           .brain-grid,
           .diet-grid,
           .exercise-grid {
-            grid-template-columns: 1fr !important;
-          }
-
-          /* Conversion flow */
-          .conversion-flow {
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 20px !important;
           }
 
           /* Section padding */
@@ -1419,31 +1471,48 @@ export default function ResistenciaInsulina() {
             padding: 60px 16px !important;
           }
 
+          section > div {
+            width: 100% !important;
+          }
+
           /* Content boxes */
-          .danger-box,
-          .warning-box,
-          .success-box,
-          .info-box,
-          .comparison-box,
-          .factory-box,
-          .cancer-intro,
-          .brain-intro,
-          .energy-intro,
-          .diabetes-intro {
+          div[style*="background: linear-gradient(135deg, rgba(239, 68, 68"],
+          div[style*="background: linear-gradient(135deg, rgba(251, 191, 36"],
+          div[style*="background: linear-gradient(135deg, rgba(59, 130, 246"],
+          div[style*="background: linear-gradient(135deg, rgba(16, 185, 129"],
+          div[style*="background: rgba(59, 130, 246"],
+          div[style*="background: rgba(255, 255, 255, 0.05)"] {
             padding: 24px !important;
+            margin: 20px 0 !important;
+          }
+
+          /* Table-like grids */
+          div[style*="display: grid"][style*="gridTemplateColumns"] {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 15px !important;
           }
 
           /* Font sizes */
-          .hero-title {
-            font-size: clamp(2.5rem, 8vw, 4rem) !important;
+          h1 {
+            font-size: clamp(2.5rem, 10vw, 4rem) !important;
           }
 
-          .section-title {
-            font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+          h2 {
+            font-size: clamp(1.8rem, 7vw, 2.5rem) !important;
           }
 
-          .subtitle {
-            font-size: 1.4rem !important;
+          h3 {
+            font-size: clamp(1.4rem, 5vw, 1.8rem) !important;
+          }
+
+          h4 {
+            font-size: clamp(1.1rem, 4vw, 1.3rem) !important;
+          }
+
+          p {
+            font-size: clamp(0.95rem, 3.5vw, 1.1rem) !important;
+            line-height: 1.7 !important;
           }
 
           /* Stat cards */
@@ -1451,115 +1520,195 @@ export default function ResistenciaInsulina() {
             padding: 20px 30px !important;
           }
 
-          /* Step cards */
-          .step-card {
-            min-width: 220px !important;
+          /* Images */
+          img {
+            max-width: 100% !important;
+            height: auto !important;
+          }
+
+          /* Video elements */
+          video {
+            max-width: 100% !important;
+            height: auto !important;
           }
         }
 
         @media (max-width: 480px) {
-          /* Hero */
-          .hero-animation {
+          /* Hero section smaller */
+          section:first-of-type {
+            min-height: 85vh !important;
+            padding: 40px 12px !important;
+          }
+
+          section:first-of-type > div {
+            padding: 0 12px !important;
+          }
+
+          /* Hero animation */
+          section:first-of-type > div > div:first-child {
             width: 120px !important;
             height: 120px !important;
-            margin-bottom: 24px !important;
+            margin-bottom: 20px !important;
           }
 
+          /* Hero title */
+          h1 {
+            font-size: clamp(2rem, 12vw, 3rem) !important;
+            margin-bottom: 16px !important;
+          }
+
+          /* Hero subtitle */
+          section:first-of-type p {
+            font-size: clamp(0.9rem, 4vw, 1.1rem) !important;
+            margin-bottom: 40px !important;
+          }
+
+          /* Stats */
           .hero-stats {
-            flex-direction: column !important;
-            gap: 16px !important;
-            width: 100%;
+            gap: 12px !important;
           }
 
-          .stat-card {
-            width: 100% !important;
+          .hero-stats > div {
             padding: 16px 24px !important;
           }
 
-          /* Navigation pills */
-          .nav-pill {
-            padding: 8px 16px !important;
-            font-size: 0.85rem !important;
+          .hero-stats > div > div:first-child {
+            font-size: 2.5rem !important;
           }
 
-          .nav-icon {
+          .hero-stats > div > div:last-child {
+            font-size: 0.8rem !important;
+          }
+
+          /* Navigation */
+          nav {
+            padding: 10px 0 !important;
+          }
+
+          nav > div {
+            padding: 0 8px !important;
+            gap: 6px !important;
+          }
+
+          nav button {
+            padding: 6px 12px !important;
+            font-size: 0.8rem !important;
+          }
+
+          nav button span:first-child {
             font-size: 1rem !important;
           }
 
-          /* Section padding */
+          /* Sections */
           section {
             padding: 40px 12px !important;
           }
 
-          .section-header {
-            margin-bottom: 40px !important;
+          /* Section headers */
+          section > div > div:first-child {
+            margin-bottom: 30px !important;
           }
 
-          .section-icon {
-            font-size: 3rem !important;
+          section > div > div:first-child > span {
+            font-size: 2.5rem !important;
           }
 
-          /* Content boxes */
-          .danger-box,
-          .warning-box,
-          .success-box,
-          .info-box,
-          .comparison-box,
-          .factory-box,
-          .cancer-intro,
-          .brain-intro,
-          .energy-intro,
-          .diabetes-intro,
-          .critical-box,
-          .analogy-box {
-            padding: 20px !important;
+          /* All content boxes */
+          div[style*="padding: 30px"],
+          div[style*="padding: 40px"],
+          div[style*="padding: 25px"] {
+            padding: 16px !important;
           }
 
-          /* Step cards */
-          .step-card {
-            padding: 20px !important;
-            min-width: 200px !important;
+          /* Process flow/step cards */
+          .process-normal > div,
+          .resistance-flow > div,
+          .conversion-flow > div {
+            min-width: 240px !important;
+            padding: 16px !important;
           }
 
-          .step-number {
-            width: 40px !important;
-            height: 40px !important;
-            font-size: 1.2rem !important;
+          .process-normal > div > div:first-child,
+          .conversion-flow > div > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 1.1rem !important;
+          }
+
+          .process-normal > span,
+          .conversion-flow > span,
+          .resistance-flow > div {
+            font-size: 1.5rem !important;
+          }
+
+          /* Bad food grid items */
+          .bad-food-grid > div {
+            padding: 12px !important;
           }
 
           /* Fat type cards */
-          .fat-type-card {
+          .fat-types-grid > div {
             margin-bottom: 16px;
           }
 
           /* Mechanism cards */
-          .mechanism-card {
-            padding: 20px !important;
+          .cancer-mechanisms > div {
+            padding: 16px !important;
           }
 
-          .mechanism-number {
-            width: 40px !important;
-            height: 40px !important;
+          .cancer-mechanisms > div > div:first-child {
+            width: 36px !important;
+            height: 36px !important;
+            font-size: 1.1rem !important;
           }
 
-          /* Exercise cards */
-          .exercise-day-card {
-            padding: 20px !important;
+          /* Diet and exercise cards */
+          div[style*="min-width: 280px"] {
+            min-width: 100% !important;
+            padding: 16px !important;
+          }
+
+          /* Cell animations */
+          div[style*="width: 100px"] {
+            width: 80px !important;
+          }
+
+          div[style*="height: 100px"] {
+            height: 80px !important;
+          }
+
+          /* Pancreas animation */
+          div[style*="fontSize: 3rem"] {
+            font-size: 2.5rem !important;
           }
 
           /* Footer */
           footer {
-            padding: 40px 16px !important;
+            padding: 32px 12px !important;
           }
 
-          .footer-text {
-            font-size: 1.1rem !important;
+          footer p:first-child {
+            font-size: 1rem !important;
           }
 
-          /* Arrow text for flows */
-          .arrow {
+          footer p:last-child {
+            font-size: 0.9rem !important;
+          }
+
+          /* Arrows between steps */
+          div[style*="fontSize: 2rem"] {
             font-size: 1.5rem !important;
             margin: 0 8px;
+          }
+
+          /* Icon sizes in steps */
+          div[style*="fontSize: 4rem"] {
+            font-size: 3rem !important;
+          }
+
+          /* Analogies and info boxes */
+          div[style*="padding: 20px"][style*="border-radius"] {
+            padding: 16px !important;
           }
         }
       `}</style>
