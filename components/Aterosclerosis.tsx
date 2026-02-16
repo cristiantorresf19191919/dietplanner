@@ -82,12 +82,12 @@ export default function Aterosclerosis() {
             La verdad científica sobre cómo el colesterol oxidado destruye tus
             arterias
           </p>
-          <div style={styles.heroStats}>
-            <div style={styles.statCard}>
+          <div className="hero-stats" style={styles.heroStats}>
+            <div className="stat-card" style={styles.statCard}>
               <div style={styles.statNumber}>70%</div>
               <div style={styles.statLabel}>Muertes cardiovasculares</div>
             </div>
-            <div style={styles.statCard}>
+            <div className="stat-card" style={styles.statCard}>
               <div style={styles.statNumber}>100%</div>
               <div style={styles.statLabel}>Prevenible con dieta</div>
             </div>
@@ -132,7 +132,7 @@ export default function Aterosclerosis() {
             </h2>
           </div>
 
-          <div style={styles.twoColumn}>
+          <div className="two-column" style={styles.twoColumn}>
             <div style={styles.textColumn}>
               <h3 style={styles.subtitle}>El Ejemplo de la Cocina</h3>
               <p style={styles.paragraph}>
@@ -165,7 +165,7 @@ export default function Aterosclerosis() {
             </div>
 
             <div style={styles.imageColumn}>
-              <div style={styles.comparisonGrid}>
+              <div className="comparison-grid" style={styles.comparisonGrid}>
                 <div style={styles.comparisonCard}>
                   <img
                     src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400&q=80"
@@ -218,7 +218,7 @@ export default function Aterosclerosis() {
             <h2 style={styles.sectionTitle}>Lo Mismo Pasa Dentro de Ti</h2>
           </div>
 
-          <div style={styles.processFlow}>
+          <div className="process-flow" style={styles.processFlow}>
             <div style={styles.flowCard}>
               <div style={styles.flowNumber}>1</div>
               <h3 style={styles.flowTitle}>LDL Normal</h3>
@@ -334,7 +334,7 @@ export default function Aterosclerosis() {
             <h2 style={styles.sectionTitle}>Células Espumosas: El Suicidio</h2>
           </div>
 
-          <div style={styles.twoColumn}>
+          <div className="two-column" style={styles.twoColumn}>
             <div style={styles.textColumn}>
               <h3 style={styles.subtitle}>¿Por qué "Espumosas"?</h3>
               <p style={styles.paragraph}>
@@ -392,7 +392,7 @@ export default function Aterosclerosis() {
             <h3 style={styles.timelineTitle}>
               El "Flow" de la Muerte: Paso a Paso
             </h3>
-            <div style={styles.timeline}>
+            <div className="timeline" style={styles.timeline}>
               {[
                 {
                   step: "Paso 1",
@@ -471,7 +471,7 @@ export default function Aterosclerosis() {
             </h2>
           </div>
 
-          <div style={styles.videoGrid}>
+          <div className="video-grid" style={styles.videoGrid}>
             <div style={styles.videoCard}>
               <div
                 style={styles.videoThumbnail}
@@ -562,7 +562,7 @@ export default function Aterosclerosis() {
             </h2>
           </div>
 
-          <div style={styles.vsContainer}>
+          <div className="vs-container" style={styles.vsContainer}>
             <div style={styles.vsCard}>
               <div style={styles.vsHeader}>
                 <h3 style={styles.vsTitle}>
@@ -619,7 +619,7 @@ export default function Aterosclerosis() {
 
           <div style={styles.keyBox}>
             <h3 style={styles.keyTitle}>🔑 Puntos Clave del Colesterol</h3>
-            <div style={styles.keyGrid}>
+            <div className="key-grid" style={styles.keyGrid}>
               <div style={styles.keyCard}>
                 <div style={styles.keyNumber}>1</div>
                 <h4 style={styles.keyCardTitle}>El Colesterol es Vital</h4>
@@ -674,7 +674,7 @@ export default function Aterosclerosis() {
 
           <div style={styles.objectivesBox}>
             <h3 style={styles.objectivesTitle}>🎯 Los 3 Objetivos</h3>
-            <div style={styles.objectivesGrid}>
+            <div className="objectives-grid" style={styles.objectivesGrid}>
               <div style={styles.objectiveCard}>
                 <div style={styles.objectiveIcon}>🛡️</div>
                 <h4 style={styles.objectiveTitle}>Evitar grietas</h4>
@@ -707,7 +707,7 @@ export default function Aterosclerosis() {
             <p style={styles.dietDescription}>
               Alimentos para neutralizar radicales libres y proteger el LDL
             </p>
-            <div style={styles.foodGrid}>
+            <div className="food-grid" style={styles.foodGrid}>
               {[
                 {
                   name: "Frutos Rojos",
@@ -757,7 +757,7 @@ export default function Aterosclerosis() {
             <p style={styles.dietDescription}>
               Para subir el HDL y reducir inflamación
             </p>
-            <div style={styles.foodGrid}>
+            <div className="food-grid" style={styles.foodGrid}>
               {[
                 {
                   name: "Aceite de Oliva",
@@ -807,7 +807,7 @@ export default function Aterosclerosis() {
             <p style={styles.dietDescription}>
               El "papel de lija" y el "oxidante"
             </p>
-            <div style={styles.forbiddenGrid}>
+            <div className="forbidden-grid" style={styles.forbiddenGrid}>
               <div style={styles.forbiddenCard}>
                 <div style={styles.forbiddenIcon}>🍞</div>
                 <h4 style={styles.forbiddenName}>Azúcar y Harinas Refinadas</h4>
@@ -830,7 +830,7 @@ export default function Aterosclerosis() {
             <h3 style={styles.weeklyTitle}>
               📅 Tu Semana Modelo en Bogotá
             </h3>
-            <div style={styles.daysGrid}>
+            <div className="days-grid" style={styles.daysGrid}>
               {[
                 {
                   day: "Lunes",
@@ -934,7 +934,7 @@ export default function Aterosclerosis() {
           {/* Supplements */}
           <div style={styles.supplementsBox}>
             <h3 style={styles.supplementsTitle}>💊 Suplementos (Tu Kit de Ingeniería Química)</h3>
-            <div style={styles.supplementsGrid}>
+            <div className="supplements-grid" style={styles.supplementsGrid}>
               {[
                 {
                   name: "Omega-3",
@@ -1075,11 +1075,252 @@ export default function Aterosclerosis() {
           animation-delay: 1s;
         }
 
+        @media (max-width: 1024px) {
+          .hero-animation {
+            width: 150px !important;
+            height: 150px !important;
+          }
+        }
+
         @media (max-width: 768px) {
+          /* Navigation */
           .nav-text {
             display: none;
           }
+
+          /* Hero section */
+          .hero-stats {
+            gap: 20px !important;
+          }
+
+          /* Two column layouts */
+          .two-column,
+          .vs-container {
+            grid-template-columns: 1fr !important;
+            gap: 30px !important;
+          }
+
+          /* Process flow - make scrollable */
+          .process-flow {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+          }
+
+          .process-flow::-webkit-scrollbar {
+            height: 6px;
+          }
+
+          .process-flow::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+          }
+
+          /* Timeline */
+          .timeline {
+            padding-left: 30px !important;
+          }
+
+          /* Grids */
+          .comparison-grid,
+          .key-grid,
+          .objectives-grid,
+          .food-grid,
+          .forbidden-grid,
+          .supplements-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .days-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          .video-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          /* VS section */
+          .vs-vs {
+            font-size: 2rem !important;
+            margin: 20px 0;
+          }
+
+          /* Section padding */
+          section {
+            padding: 60px 16px !important;
+          }
+
+          /* Content boxes */
+          .danger-box,
+          .warning-box,
+          .success-box,
+          .info-box,
+          .key-box,
+          .objectives-box,
+          .supplements-box,
+          .commandments-box,
+          .weekly-plan {
+            padding: 24px !important;
+          }
+
+          /* Table rows */
+          .table-row {
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+          }
+
+          /* Macrophage animation */
+          .macrophage-animation {
+            padding: 24px !important;
+          }
+
+          /* Font sizes */
+          .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4rem) !important;
+          }
+
+          .section-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+          }
+
+          .subtitle {
+            font-size: 1.4rem !important;
+          }
+
+          /* Stat cards */
+          .stat-card {
+            padding: 20px 30px !important;
+          }
+
+          /* Day cards min-width */
+          .day-card {
+            min-width: auto !important;
+          }
         }
+
+        @media (max-width: 480px) {
+          /* Hero */
+          .hero-animation {
+            width: 120px !important;
+            height: 120px !important;
+            margin-bottom: 24px !important;
+          }
+
+          .hero-stats {
+            flex-direction: column !important;
+            gap: 16px !important;
+            width: 100%;
+          }
+
+          .stat-card {
+            width: 100% !important;
+            padding: 16px 24px !important;
+          }
+
+          /* Navigation pills */
+          .nav-pill {
+            padding: 8px 16px !important;
+            font-size: 0.85rem !important;
+          }
+
+          .nav-icon {
+            font-size: 1rem !important;
+          }
+
+          /* Section padding */
+          section {
+            padding: 40px 12px !important;
+          }
+
+          .section-header {
+            margin-bottom: 40px !important;
+          }
+
+          .section-icon {
+            font-size: 3rem !important;
+          }
+
+          /* Content boxes */
+          .danger-box,
+          .warning-box,
+          .success-box,
+          .info-box,
+          .key-box,
+          .objectives-box,
+          .supplements-box,
+          .commandments-box,
+          .weekly-plan,
+          .highlight-box {
+            padding: 20px !important;
+          }
+
+          /* Flow cards */
+          .flow-card {
+            padding: 20px !important;
+            min-width: 240px !important;
+          }
+
+          .flow-number {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.2rem !important;
+          }
+
+          /* Timeline */
+          .timeline {
+            padding-left: 20px !important;
+          }
+
+          .timeline-marker {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.1rem !important;
+          }
+
+          /* Food cards */
+          .food-image {
+            height: 140px !important;
+          }
+
+          .food-content {
+            padding: 16px !important;
+          }
+
+          /* Weekly plan */
+          .weekly-title {
+            font-size: 1.8rem !important;
+          }
+
+          .day-card {
+            padding: 20px !important;
+          }
+
+          .day-name {
+            font-size: 1.4rem !important;
+          }
+
+          /* Footer */
+          footer {
+            padding: 40px 16px !important;
+          }
+
+          .footer-text {
+            font-size: 1.1rem !important;
+          }
+
+          /* Commandment */
+          .commandment {
+            flex-direction: column !important;
+            align-items: center !important;
+            text-align: center;
+          }
+
+          .commandment-number {
+            width: 44px !important;
+            height: 44px !important;
+          }
+        }
+
       `}</style>
     </div>
   );

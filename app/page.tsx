@@ -12,6 +12,7 @@ export default function Home() {
     <div style={{ position: "relative" }}>
       {/* Navigation Toggle */}
       <div
+        className="nav-toggle"
         style={{
           position: "fixed",
           top: 20,
@@ -97,6 +98,42 @@ export default function Home() {
 
       {/* Content */}
       {view === "diet" ? <DietPlanner /> : view === "aterosclerosis" ? <Aterosclerosis /> : <ResistenciaInsulina />}
+
+      <style jsx global>{`
+        @media (max-width: 768px) {
+          .nav-toggle {
+            top: 10px !important;
+            right: 10px !important;
+            left: 10px !important;
+            gap: 6px !important;
+            padding: 6px !important;
+            border-radius: 12px !important;
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          .nav-toggle button {
+            padding: 8px 12px !important;
+            font-size: 12px !important;
+            flex: 1;
+            min-width: 90px;
+            white-space: nowrap;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .nav-toggle {
+            gap: 4px !important;
+            padding: 4px !important;
+          }
+
+          .nav-toggle button {
+            padding: 6px 8px !important;
+            font-size: 11px !important;
+            min-width: 80px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

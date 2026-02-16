@@ -107,12 +107,12 @@ export default function ResistenciaInsulina() {
             Cómo el exceso de glucosa destruye tu cuerpo y qué hacer para
             revertirlo
           </p>
-          <div style={styles.heroStats}>
-            <div style={styles.statCard}>
+          <div className="hero-stats" style={styles.heroStats}>
+            <div className="stat-card" style={styles.statCard}>
               <div style={styles.statNumber}>90%</div>
               <div style={styles.statLabel}>De las diabetes son tipo 2</div>
             </div>
-            <div style={styles.statCard}>
+            <div className="stat-card" style={styles.statCard}>
               <div style={styles.statNumber}>100%</div>
               <div style={styles.statLabel}>Reversible con dieta y ejercicio</div>
             </div>
@@ -154,7 +154,7 @@ export default function ResistenciaInsulina() {
             </p>
           </div>
 
-          <div style={styles.processNormal}>
+          <div className="process-normal" style={styles.processNormal}>
             <div style={styles.stepCard}>
               <div style={styles.stepNumber}>1</div>
               <h3 style={styles.stepTitle}>Comes Carbohidratos</h3>
@@ -220,9 +220,9 @@ export default function ResistenciaInsulina() {
             </p>
           </div>
 
-          <div style={styles.twoColumn}>
+          <div className="two-column" style={styles.twoColumn}>
             <div style={styles.imageColumn}>
-              <div style={styles.badFoodGrid}>
+              <div className="bad-food-grid" style={styles.badFoodGrid}>
                 <div style={styles.badFoodCard}>
                   <div style={styles.badFoodIcon}>🍞</div>
                   <div style={styles.badFoodLabel}>Pan blanco</div>
@@ -305,7 +305,7 @@ export default function ResistenciaInsulina() {
             </div>
           </div>
 
-          <div style={styles.resistanceFlow}>
+          <div className="resistance-flow" style={styles.resistanceFlow}>
             <div style={styles.resistanceCard}>
               <h4 style={styles.resistanceTitle}>Antes</h4>
               <div style={styles.cellNormal}>
@@ -373,7 +373,7 @@ export default function ResistenciaInsulina() {
               <strong>triglicéridos (grasa)</strong>.
             </p>
 
-            <div style={styles.conversionFlow}>
+            <div className="conversion-flow" style={styles.conversionFlow}>
               <div style={styles.conversionStep}>
                 <div style={styles.conversionIcon}>🍬</div>
                 <p>Glucosa rechazada</p>
@@ -396,7 +396,7 @@ export default function ResistenciaInsulina() {
             </div>
           </div>
 
-          <div style={styles.fatTypesGrid}>
+          <div className="fat-types-grid" style={styles.fatTypesGrid}>
             <div style={styles.fatTypeCard}>
               <div
                 style={{
@@ -489,7 +489,7 @@ export default function ResistenciaInsulina() {
             </p>
           </div>
 
-          <div style={styles.cancerMechanisms}>
+          <div className="cancer-mechanisms" style={styles.cancerMechanisms}>
             <div style={styles.mechanismCard}>
               <div style={styles.mechanismNumber}>1</div>
               <h4 style={styles.mechanismTitle}>Efecto Directo</h4>
@@ -1352,9 +1352,214 @@ export default function ResistenciaInsulina() {
           animation-delay: 1s;
         }
 
+        @media (max-width: 1024px) {
+          .hero-animation {
+            width: 150px !important;
+            height: 150px !important;
+          }
+        }
+
         @media (max-width: 768px) {
+          /* Navigation */
           .nav-text {
             display: none;
+          }
+
+          /* Hero section */
+          .hero-stats {
+            gap: 20px !important;
+          }
+
+          /* Two column layouts */
+          .two-column {
+            grid-template-columns: 1fr !important;
+            gap: 30px !important;
+          }
+
+          /* Process flows - make scrollable */
+          .process-normal,
+          .process-flow,
+          .resistance-flow {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+          }
+
+          .process-normal::-webkit-scrollbar,
+          .process-flow::-webkit-scrollbar,
+          .resistance-flow::-webkit-scrollbar {
+            height: 6px;
+          }
+
+          .process-normal::-webkit-scrollbar-thumb,
+          .process-flow::-webkit-scrollbar-thumb,
+          .resistance-flow::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+          }
+
+          /* Grids */
+          .bad-food-grid,
+          .fat-types-grid,
+          .cancer-mechanisms,
+          .brain-grid,
+          .diet-grid,
+          .exercise-grid {
+            grid-template-columns: 1fr !important;
+          }
+
+          /* Conversion flow */
+          .conversion-flow {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          /* Section padding */
+          section {
+            padding: 60px 16px !important;
+          }
+
+          /* Content boxes */
+          .danger-box,
+          .warning-box,
+          .success-box,
+          .info-box,
+          .comparison-box,
+          .factory-box,
+          .cancer-intro,
+          .brain-intro,
+          .energy-intro,
+          .diabetes-intro {
+            padding: 24px !important;
+          }
+
+          /* Font sizes */
+          .hero-title {
+            font-size: clamp(2.5rem, 8vw, 4rem) !important;
+          }
+
+          .section-title {
+            font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+          }
+
+          .subtitle {
+            font-size: 1.4rem !important;
+          }
+
+          /* Stat cards */
+          .stat-card {
+            padding: 20px 30px !important;
+          }
+
+          /* Step cards */
+          .step-card {
+            min-width: 220px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          /* Hero */
+          .hero-animation {
+            width: 120px !important;
+            height: 120px !important;
+            margin-bottom: 24px !important;
+          }
+
+          .hero-stats {
+            flex-direction: column !important;
+            gap: 16px !important;
+            width: 100%;
+          }
+
+          .stat-card {
+            width: 100% !important;
+            padding: 16px 24px !important;
+          }
+
+          /* Navigation pills */
+          .nav-pill {
+            padding: 8px 16px !important;
+            font-size: 0.85rem !important;
+          }
+
+          .nav-icon {
+            font-size: 1rem !important;
+          }
+
+          /* Section padding */
+          section {
+            padding: 40px 12px !important;
+          }
+
+          .section-header {
+            margin-bottom: 40px !important;
+          }
+
+          .section-icon {
+            font-size: 3rem !important;
+          }
+
+          /* Content boxes */
+          .danger-box,
+          .warning-box,
+          .success-box,
+          .info-box,
+          .comparison-box,
+          .factory-box,
+          .cancer-intro,
+          .brain-intro,
+          .energy-intro,
+          .diabetes-intro,
+          .critical-box,
+          .analogy-box {
+            padding: 20px !important;
+          }
+
+          /* Step cards */
+          .step-card {
+            padding: 20px !important;
+            min-width: 200px !important;
+          }
+
+          .step-number {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 1.2rem !important;
+          }
+
+          /* Fat type cards */
+          .fat-type-card {
+            margin-bottom: 16px;
+          }
+
+          /* Mechanism cards */
+          .mechanism-card {
+            padding: 20px !important;
+          }
+
+          .mechanism-number {
+            width: 40px !important;
+            height: 40px !important;
+          }
+
+          /* Exercise cards */
+          .exercise-day-card {
+            padding: 20px !important;
+          }
+
+          /* Footer */
+          footer {
+            padding: 40px 16px !important;
+          }
+
+          .footer-text {
+            font-size: 1.1rem !important;
+          }
+
+          /* Arrow text for flows */
+          .arrow {
+            font-size: 1.5rem !important;
+            margin: 0 8px;
           }
         }
       `}</style>
