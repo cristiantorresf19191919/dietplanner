@@ -316,85 +316,131 @@ function ProgressRing({ value, max, size = 140, strokeWidth = 10, color }: {
   );
 }
 
-/* ── Meal Card (pill-style) ───────────────────────────────── */
-function MealCard({ meal, checked, onToggle, index, cascadeDelay }: {
+/* ── Meal Card (pill-style, expandable) ───────────────────── */
+function MealCard({ meal, checked, onToggle, index, cascadeDelay, isExpanded, onExpand }: {
   meal: Meal; checked: boolean; onToggle: () => void; index: number; cascadeDelay?: number;
+  isExpanded: boolean; onExpand: () => void;
 }) {
   const isCascade = cascadeDelay !== undefined;
   return (
     <div
-      className="meal-card"
-      onClick={onToggle}
       style={{
-        display: "flex", alignItems: "center", gap: 12,
-        background: checked
-          ? `linear-gradient(135deg, ${meal.color}22, ${meal.color}08)`
-          : "rgba(255,255,255,0.025)",
-        border: `1px solid ${checked ? meal.color + "55" : "rgba(255,255,255,0.06)"}`,
-        borderRadius: 16, padding: "14px 18px", cursor: "pointer",
-        transition: "all .3s ease",
         opacity: isCascade ? 0 : undefined,
         animation: isCascade
           ? `cascadeIn ${CASCADE_DURATION}s cubic-bezier(0.22, 1, 0.36, 1) ${cascadeDelay}s both`
           : `slideUp .5s ${index * 0.06}s both ease`,
-        position: "relative", overflow: "hidden",
       }}
     >
-      {checked && (
-        <div style={{
-          position: "absolute", top: 0, left: 0, bottom: 0, width: 4,
-          background: `linear-gradient(180deg, ${meal.color}, transparent)`,
-          borderRadius: "4px 0 0 4px",
-        }} />
-      )}
-
-      {/* Checkbox */}
-      <div className="meal-check" style={{
-        width: 26, height: 26, borderRadius: 8, flexShrink: 0,
-        border: checked ? "none" : `2px solid rgba(255,255,255,0.15)`,
-        background: checked ? meal.color : "transparent",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        transition: "all .25s ease",
-        boxShadow: checked ? `0 0 12px ${meal.color}55` : "none",
-      }}>
+      <div
+        className="meal-card"
+        style={{
+          display: "flex", alignItems: "center", gap: 12,
+          background: checked
+            ? `linear-gradient(135deg, ${meal.color}22, ${meal.color}08)`
+            : "rgba(255,255,255,0.025)",
+          border: `1px solid ${checked ? meal.color + "55" : "rgba(255,255,255,0.06)"}`,
+          borderRadius: isExpanded ? "16px 16px 0 0" : 16,
+          padding: "14px 18px", cursor: "pointer",
+          transition: "all .3s ease",
+          position: "relative", overflow: "hidden",
+        }}
+      >
         {checked && (
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D0F18" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
+          <div style={{
+            position: "absolute", top: 0, left: 0, bottom: 0, width: 4,
+            background: `linear-gradient(180deg, ${meal.color}, transparent)`,
+            borderRadius: "4px 0 0 4px",
+          }} />
         )}
+
+        {/* Checkbox */}
+        <div className="meal-check" onClick={(e) => { e.stopPropagation(); onToggle(); }} style={{
+          width: 26, height: 26, borderRadius: 8, flexShrink: 0,
+          border: checked ? "none" : `2px solid rgba(255,255,255,0.15)`,
+          background: checked ? meal.color : "transparent",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          transition: "all .25s ease",
+          boxShadow: checked ? `0 0 12px ${meal.color}55` : "none",
+          cursor: "pointer",
+        }}>
+          {checked && (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D0F18" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          )}
+        </div>
+
+        {/* Pill tag */}
+        <div className="meal-pill" onClick={onExpand} style={{
+          padding: "4px 14px", borderRadius: 20,
+          background: meal.color + "22", color: meal.color,
+          fontSize: 11, fontWeight: 700, letterSpacing: 0.5,
+          textTransform: "uppercase", whiteSpace: "nowrap", flexShrink: 0,
+          cursor: "pointer",
+        }}>
+          {meal.name}
+        </div>
+
+        {/* Description */}
+        <div className="meal-desc" onClick={onExpand} style={{
+          flex: 1, fontSize: 13, color: checked ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.72)",
+          textDecoration: checked ? "line-through" : "none",
+          lineHeight: 1.4, minWidth: 0,
+          transition: "color .3s ease",
+          cursor: "pointer",
+        }}>
+          {meal.desc}
+        </div>
+
+        {/* Kcal badge + expand chevron */}
+        <div onClick={onExpand} style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+          <div className="meal-kcal" style={{
+            padding: "5px 12px", borderRadius: 12,
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            fontSize: 13, fontWeight: 600, whiteSpace: "nowrap",
+            color: checked ? meal.color : "rgba(255,255,255,0.55)",
+            fontVariantNumeric: "tabular-nums",
+          }}>
+            {meal.kcal} kcal
+          </div>
+          <svg
+            width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            style={{ transition: "transform 0.25s ease", transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)", flexShrink: 0 }}
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </div>
       </div>
 
-      {/* Pill tag */}
-      <div className="meal-pill" style={{
-        padding: "4px 14px", borderRadius: 20,
-        background: meal.color + "22", color: meal.color,
-        fontSize: 11, fontWeight: 700, letterSpacing: 0.5,
-        textTransform: "uppercase", whiteSpace: "nowrap", flexShrink: 0,
-      }}>
-        {meal.name}
-      </div>
-
-      {/* Description */}
-      <div className="meal-desc" style={{
-        flex: 1, fontSize: 13, color: checked ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.72)",
-        textDecoration: checked ? "line-through" : "none",
-        lineHeight: 1.4, minWidth: 0,
-        transition: "color .3s ease",
-      }}>
-        {meal.desc}
-      </div>
-
-      {/* Kcal badge */}
-      <div className="meal-kcal" style={{
-        padding: "5px 12px", borderRadius: 12,
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.06)",
-        fontSize: 13, fontWeight: 600, whiteSpace: "nowrap",
-        color: checked ? meal.color : "rgba(255,255,255,0.55)",
-        fontVariantNumeric: "tabular-nums",
-      }}>
-        {meal.kcal} kcal
-      </div>
+      {/* Expanded Macro Details */}
+      {isExpanded && (
+        <div style={{
+          display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8,
+          padding: "12px 18px 14px",
+          background: checked
+            ? `linear-gradient(135deg, ${meal.color}11, ${meal.color}05)`
+            : "rgba(255,255,255,0.015)",
+          border: `1px solid ${checked ? meal.color + "33" : "rgba(255,255,255,0.05)"}`,
+          borderTop: "none",
+          borderRadius: "0 0 16px 16px",
+          animation: "slideUp 0.2s ease",
+        }}>
+          <div style={{ textAlign: "center", padding: "8px 4px", background: "rgba(78,235,194,0.06)", borderRadius: 10, border: "1px solid rgba(78,235,194,0.1)" }}>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.8, fontWeight: 700, marginBottom: 4 }}>Prot</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: "#4EEBC2", fontFamily: "'JetBrains Mono', monospace" }}>{meal.prot}g</div>
+          </div>
+          <div style={{ textAlign: "center", padding: "8px 4px", background: "rgba(245,185,113,0.06)", borderRadius: 10, border: "1px solid rgba(245,185,113,0.1)" }}>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.8, fontWeight: 700, marginBottom: 4 }}>Carbs</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: "#F5B971", fontFamily: "'JetBrains Mono', monospace" }}>{meal.carb}g</div>
+          </div>
+          <div style={{ textAlign: "center", padding: "8px 4px", background: "rgba(232,140,237,0.06)", borderRadius: 10, border: "1px solid rgba(232,140,237,0.1)" }}>
+            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: 0.8, fontWeight: 700, marginBottom: 4 }}>Grasas</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: "#E88CED", fontFamily: "'JetBrains Mono', monospace" }}>{meal.grasas}g</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -534,6 +580,7 @@ export default function DietPlanner() {
   const [showModal, setShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [expandedMeal, setExpandedMeal] = useState<string | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -560,6 +607,7 @@ export default function DietPlanner() {
 
   useEffect(() => {
     if (contentRef.current) contentRef.current.scrollTop = 0;
+    setExpandedMeal(null);
   }, [activeDay]);
 
   return (
@@ -803,16 +851,21 @@ export default function DietPlanner() {
 
         {/* Meals List */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {dayData.meals.map((meal, mi) => (
-            <MealCard
-              key={`${activeDay}-${mi}`}
-              meal={meal}
-              checked={checked[`${activeDay}-${mi}`]}
-              onToggle={() => toggle(activeDay, mi)}
-              index={mi}
-              cascadeDelay={isFirstLoad ? 5 * CASCADE_STAGGER + mi * 0.07 : undefined}
-            />
-          ))}
+          {dayData.meals.map((meal, mi) => {
+            const mealKey = `${activeDay}-${mi}`;
+            return (
+              <MealCard
+                key={mealKey}
+                meal={meal}
+                checked={checked[mealKey]}
+                onToggle={() => toggle(activeDay, mi)}
+                index={mi}
+                cascadeDelay={isFirstLoad ? 5 * CASCADE_STAGGER + mi * 0.07 : undefined}
+                isExpanded={expandedMeal === mealKey}
+                onExpand={() => setExpandedMeal(expandedMeal === mealKey ? null : mealKey)}
+              />
+            );
+          })}
         </div>
 
         {/* Quick Macros per Meal (expanded view) */}
@@ -849,7 +902,11 @@ export default function DietPlanner() {
       </div>
 
       {/* Progress Tracker */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 28px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "20px 28px 0" }}>
+        <div style={{
+          height: 1, marginBottom: 32,
+          background: "linear-gradient(90deg, transparent, rgba(78,235,194,0.15) 30%, rgba(232,140,237,0.15) 70%, transparent)",
+        }} />
         <DietProgressTracker dietType="general" />
       </div>
 

@@ -12,153 +12,183 @@ export default function Home() {
   const [showProfileForm, setShowProfileForm] = useState(false);
   const { hasProfile, nutritionalNeeds } = useUserProfile();
 
+  const navItems = [
+    { key: "diet" as const, label: "Mi Dieta", icon: "🥗", activeGradient: "linear-gradient(135deg, #4EEBC2, #E88CED)" },
+    { key: "aterosclerosis" as const, label: "Aterosclerosis", icon: "🫀", activeGradient: "linear-gradient(135deg, #ef4444, #f97316)" },
+    { key: "insulina" as const, label: "Insulina", icon: "⚡", activeGradient: "linear-gradient(135deg, #3b82f6, #10b981)" },
+  ];
+
   return (
-    <div style={{ position: "relative" }}>
-      {/* Navigation Toggle */}
-      <div
-        className="nav-toggle"
+    <div style={{ position: "relative", minHeight: "100vh" }}>
+      {/* Sticky Header */}
+      <header
+        className="main-header"
         style={{
-          position: "fixed",
-          top: 20,
-          right: 20,
+          position: "sticky",
+          top: 0,
           zIndex: 1000,
-          display: "flex",
-          gap: "10px",
-          background: "rgba(13, 15, 24, 0.95)",
-          backdropFilter: "blur(20px)",
-          padding: "8px",
-          borderRadius: "16px",
-          border: "1px solid rgba(255, 255, 255, 0.1)",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+          background: "rgba(13, 15, 24, 0.97)",
+          backdropFilter: "blur(24px)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+          transition: "all 0.3s ease",
         }}
       >
-        <button
-          onClick={() => setView("diet")}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "12px",
-            border: "none",
-            background:
-              view === "diet"
-                ? "linear-gradient(135deg, #4EEBC2, #E88CED)"
-                : "transparent",
-            color: view === "diet" ? "#0D0F18" : "rgba(255, 255, 255, 0.6)",
-            fontSize: "14px",
-            fontWeight: 700,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            fontFamily: "'Outfit', sans-serif",
-          }}
-        >
-          🥗 Mi Dieta
-        </button>
-        <button
-          onClick={() => setView("aterosclerosis")}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "12px",
-            border: "none",
-            background:
-              view === "aterosclerosis"
-                ? "linear-gradient(135deg, #ef4444, #f97316)"
-                : "transparent",
-            color:
-              view === "aterosclerosis"
-                ? "#fff"
-                : "rgba(255, 255, 255, 0.6)",
-            fontSize: "14px",
-            fontWeight: 700,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            fontFamily: "'Outfit', sans-serif",
-          }}
-        >
-          🫀 Aterosclerosis
-        </button>
-        <button
-          onClick={() => setView("insulina")}
-          style={{
-            padding: "10px 20px",
-            borderRadius: "12px",
-            border: "none",
-            background:
-              view === "insulina"
-                ? "linear-gradient(135deg, #3b82f6, #10b981)"
-                : "transparent",
-            color:
-              view === "insulina"
-                ? "#fff"
-                : "rgba(255, 255, 255, 0.6)",
-            fontSize: "14px",
-            fontWeight: 700,
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            fontFamily: "'Outfit', sans-serif",
-          }}
-        >
-          ⚡ Resistencia Insulina
-        </button>
-      </div>
-
-      {/* Profile Button */}
-      {hasProfile && (
         <div
           style={{
-            position: "fixed",
-            top: 20,
-            left: 20,
-            zIndex: 1000,
+            maxWidth: 960,
+            margin: "0 auto",
             display: "flex",
-            gap: "10px",
-            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 20px",
+            height: 60,
+            gap: 12,
           }}
         >
-          <button
-            onClick={() => setShowProfileForm(true)}
-            style={{
-              padding: "10px 16px",
-              background: "linear-gradient(135deg, #4EEBC2, #E88CED)",
-              border: "none",
-              borderRadius: "12px",
-              color: "#0D0F18",
-              cursor: "pointer",
-              fontSize: "0.9rem",
-              fontWeight: 700,
-              transition: "all 0.3s ease",
-              fontFamily: "'Outfit', sans-serif",
-              boxShadow: "0 4px 16px rgba(78, 235, 194, 0.3)",
-            }}
-          >
-            👤 Mi Perfil
-          </button>
-          {nutritionalNeeds && (
-            <div
+          {/* Profile Quick Access */}
+          {hasProfile ? (
+            <button
+              onClick={() => setShowProfileForm(true)}
+              className="profile-btn"
               style={{
-                padding: "12px",
-                background: "rgba(13, 15, 24, 0.95)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                borderRadius: "12px",
-                color: "#fff",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                fontFamily: "'Outfit', sans-serif",
                 display: "flex",
-                flexDirection: "column",
-                gap: "6px",
+                alignItems: "center",
+                gap: 10,
+                padding: "8px 14px",
+                background: "rgba(255, 255, 255, 0.04)",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+                borderRadius: 12,
+                color: "#fff",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                fontFamily: "'Outfit', sans-serif",
+                flexShrink: 0,
               }}
             >
-              <div>🔥 {nutritionalNeeds.targetCalories} cal</div>
-              <div>💪 {nutritionalNeeds.protein}g P</div>
-              <div>🍞 {nutritionalNeeds.carbs}g C</div>
-              <div>🥑 {nutritionalNeeds.fats}g G</div>
-            </div>
+              <span style={{ fontSize: 18 }}>👤</span>
+              {nutritionalNeeds && (
+                <div className="profile-macros" style={{ display: "flex", gap: 8, fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.6)" }}>
+                  <span style={{ color: "#4EEBC2" }}>{nutritionalNeeds.targetCalories} cal</span>
+                  <span className="profile-macro-detail" style={{ color: "#F5B971" }}>{nutritionalNeeds.protein}g P</span>
+                </div>
+              )}
+            </button>
+          ) : (
+            <div style={{ width: 40 }} />
+          )}
+
+          {/* Desktop Navigation Pills */}
+          <nav
+            className="desktop-nav"
+            style={{
+              display: "flex",
+              gap: 6,
+              background: "rgba(255, 255, 255, 0.03)",
+              padding: 4,
+              borderRadius: 14,
+              border: "1px solid rgba(255, 255, 255, 0.06)",
+            }}
+          >
+            {navItems.map((item) => (
+              <button
+                key={item.key}
+                onClick={() => setView(item.key)}
+                style={{
+                  padding: "8px 18px",
+                  borderRadius: 10,
+                  border: "none",
+                  background: view === item.key ? item.activeGradient : "transparent",
+                  color: view === item.key ? (item.key === "diet" ? "#0D0F18" : "#fff") : "rgba(255, 255, 255, 0.5)",
+                  fontSize: "0.85rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  transition: "all 0.25s ease",
+                  fontFamily: "'Outfit', sans-serif",
+                  whiteSpace: "nowrap",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                <span style={{ marginRight: 6 }}>{item.icon}</span>
+                <span className="nav-label">{item.label}</span>
+              </button>
+            ))}
+          </nav>
+
+          {/* Spacer to balance layout */}
+          <div className="header-spacer" style={{ width: 40, flexShrink: 0 }} />
+        </div>
+      </header>
+
+      {/* Mobile Bottom Navigation */}
+      <nav
+        className="mobile-bottom-nav"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: "rgba(13, 15, 24, 0.97)",
+          backdropFilter: "blur(24px)",
+          borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+          display: "none", // shown via media query
+          padding: "8px 16px",
+          paddingBottom: "max(8px, env(safe-area-inset-bottom))",
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-around", maxWidth: 400, margin: "0 auto" }}>
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => setView(item.key)}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 3,
+                padding: "6px 16px",
+                border: "none",
+                borderRadius: 12,
+                background: view === item.key ? `${item.activeGradient}` : "transparent",
+                color: view === item.key ? (item.key === "diet" ? "#0D0F18" : "#fff") : "rgba(255, 255, 255, 0.4)",
+                cursor: "pointer",
+                fontFamily: "'Outfit', sans-serif",
+                transition: "all 0.25s ease",
+              }}
+            >
+              <span style={{ fontSize: 20 }}>{item.icon}</span>
+              <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.02em" }}>{item.label}</span>
+            </button>
+          ))}
+          {hasProfile && (
+            <button
+              onClick={() => setShowProfileForm(true)}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 3,
+                padding: "6px 16px",
+                border: "none",
+                borderRadius: 12,
+                background: "transparent",
+                color: "rgba(255, 255, 255, 0.4)",
+                cursor: "pointer",
+                fontFamily: "'Outfit', sans-serif",
+                transition: "all 0.25s ease",
+              }}
+            >
+              <span style={{ fontSize: 20 }}>👤</span>
+              <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.02em" }}>Perfil</span>
+            </button>
           )}
         </div>
-      )}
+      </nav>
 
       {/* Content */}
-      {view === "diet" ? <DietPlanner /> : view === "aterosclerosis" ? <Aterosclerosis /> : <ResistenciaInsulina />}
+      <main style={{ paddingBottom: 80 }}>
+        {view === "diet" ? <DietPlanner /> : view === "aterosclerosis" ? <Aterosclerosis /> : <ResistenciaInsulina />}
+      </main>
 
       {/* Profile Form */}
       {(!hasProfile || showProfileForm) && (
@@ -166,37 +196,60 @@ export default function Home() {
       )}
 
       <style jsx global>{`
+        /* Desktop: show header nav, hide bottom nav */
+        .mobile-bottom-nav { display: none !important; }
+        .desktop-nav { display: flex !important; }
+
+        .profile-btn:hover {
+          background: rgba(255, 255, 255, 0.08) !important;
+          border-color: rgba(78, 235, 194, 0.2) !important;
+        }
+
         @media (max-width: 768px) {
-          .nav-toggle {
-            top: 10px !important;
-            right: 10px !important;
-            left: 10px !important;
-            gap: 6px !important;
-            padding: 6px !important;
-            border-radius: 12px !important;
-            flex-wrap: wrap;
-            justify-content: center;
+          /* Mobile: hide desktop nav labels, show bottom nav */
+          .mobile-bottom-nav {
+            display: flex !important;
           }
 
-          .nav-toggle button {
-            padding: 8px 12px !important;
-            font-size: 12px !important;
-            flex: 1;
-            min-width: 90px;
-            white-space: nowrap;
+          .desktop-nav {
+            display: none !important;
+          }
+
+          .main-header {
+            height: auto !important;
+          }
+
+          .main-header > div {
+            height: 52px !important;
+            padding: 0 16px !important;
+          }
+
+          .profile-macro-detail {
+            display: none !important;
+          }
+
+          .header-spacer {
+            display: none !important;
+          }
+
+          main {
+            padding-bottom: 100px !important;
           }
         }
 
         @media (max-width: 480px) {
-          .nav-toggle {
-            gap: 4px !important;
-            padding: 4px !important;
+          .profile-macros {
+            display: none !important;
           }
 
-          .nav-toggle button {
-            padding: 6px 8px !important;
-            font-size: 11px !important;
-            min-width: 80px;
+          .main-header > div {
+            justify-content: center !important;
+          }
+        }
+
+        @media (min-width: 769px) {
+          main {
+            padding-bottom: 0 !important;
           }
         }
       `}</style>

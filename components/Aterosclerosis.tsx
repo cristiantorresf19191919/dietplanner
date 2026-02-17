@@ -3,9 +3,67 @@
 import React, { useState, useEffect } from "react";
 import DietProgressTracker from "./DietProgressTracker";
 
+function ExpandToggle({ title, icon, isOpen, onToggle, color = "#f1f5f9" }: {
+  title: string; icon: string; isOpen: boolean; onToggle: () => void; color?: string;
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      className="expand-toggle"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        padding: "20px 24px",
+        background: "rgba(255, 255, 255, 0.03)",
+        border: "1px solid rgba(255, 255, 255, 0.08)",
+        borderRadius: isOpen ? "16px 16px 0 0" : 16,
+        color,
+        cursor: "pointer",
+        transition: "all 0.3s ease",
+        fontFamily: "'Outfit', sans-serif",
+        marginBottom: isOpen ? 0 : 0,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ fontSize: "1.4rem" }}>{icon}</span>
+        <span style={{ fontSize: "1.2rem", fontWeight: 700 }}>{title}</span>
+      </div>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{
+          transition: "transform 0.3s ease",
+          transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+          opacity: 0.6,
+        }}
+      >
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
+  );
+}
+
 export default function Aterosclerosis() {
   const [activeSection, setActiveSection] = useState(0);
   const [showVideo, setShowVideo] = useState<string | null>(null);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set(["timeline"]));
+
+  const toggleExpand = (id: string) => {
+    setExpanded(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -389,10 +447,23 @@ export default function Aterosclerosis() {
             </div>
           </div>
 
-          <div style={styles.timelineBox}>
-            <h3 style={styles.timelineTitle}>
-              El "Flow" de la Muerte: Paso a Paso
-            </h3>
+          <div style={{ ...styles.timelineBox, marginTop: 40 }}>
+            <ExpandToggle
+              title='El "Flow" de la Muerte: Paso a Paso'
+              icon="💀"
+              isOpen={expanded.has("timeline")}
+              onToggle={() => toggleExpand("timeline")}
+              color="#fecaca"
+            />
+            {expanded.has("timeline") && (
+            <div style={{
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "none",
+              borderRadius: "0 0 16px 16px",
+              padding: "30px 24px",
+              animation: "slideDown 0.3s ease",
+            }}>
             <div className="timeline" style={styles.timeline}>
               {[
                 {
@@ -454,6 +525,8 @@ export default function Aterosclerosis() {
                 </div>
               ))}
             </div>
+            </div>
+            )}
           </div>
         </div>
       </section>
@@ -828,9 +901,22 @@ export default function Aterosclerosis() {
 
           {/* Weekly Plan */}
           <div style={styles.weeklyPlan}>
-            <h3 style={styles.weeklyTitle}>
-              📅 Tu Semana Modelo en Bogotá
-            </h3>
+            <ExpandToggle
+              title="Tu Semana Modelo en Bogota"
+              icon="📅"
+              isOpen={expanded.has("weeklyPlan")}
+              onToggle={() => toggleExpand("weeklyPlan")}
+              color="#f1f5f9"
+            />
+            {expanded.has("weeklyPlan") && (
+            <div style={{
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderTop: "none",
+              borderRadius: "0 0 16px 16px",
+              padding: "30px 24px",
+              animation: "slideDown 0.3s ease",
+            }}>
             <div className="days-grid" style={styles.daysGrid}>
               {[
                 {
@@ -930,11 +1016,28 @@ export default function Aterosclerosis() {
                 </div>
               ))}
             </div>
+            </div>
+            )}
           </div>
 
           {/* Supplements */}
-          <div style={styles.supplementsBox}>
-            <h3 style={styles.supplementsTitle}>💊 Suplementos (Tu Kit de Ingeniería Química)</h3>
+          <div style={{ marginTop: 60 }}>
+            <ExpandToggle
+              title="Suplementos (Tu Kit de Ingenieria Quimica)"
+              icon="💊"
+              isOpen={expanded.has("supplements")}
+              onToggle={() => toggleExpand("supplements")}
+              color="#c4b5fd"
+            />
+            {expanded.has("supplements") && (
+            <div style={{
+              background: "linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%)",
+              border: "1px solid rgba(139, 92, 246, 0.2)",
+              borderTop: "none",
+              borderRadius: "0 0 16px 16px",
+              padding: "30px 24px",
+              animation: "slideDown 0.3s ease",
+            }}>
             <div className="supplements-grid" style={styles.supplementsGrid}>
               {[
                 {
@@ -974,13 +1077,28 @@ export default function Aterosclerosis() {
                 </div>
               ))}
             </div>
+            </div>
+            )}
           </div>
 
           {/* Commandments */}
-          <div style={styles.commandmentsBox}>
-            <h3 style={styles.commandmentsTitle}>
-              ⚡ Los 3 Mandamientos del Ingeniero
-            </h3>
+          <div style={{ marginTop: 60 }}>
+            <ExpandToggle
+              title="Los 3 Mandamientos del Ingeniero"
+              icon="⚡"
+              isOpen={expanded.has("commandments")}
+              onToggle={() => toggleExpand("commandments")}
+              color="#fde68a"
+            />
+            {expanded.has("commandments") && (
+            <div style={{
+              background: "linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(245, 158, 11, 0.05) 100%)",
+              border: "1px solid rgba(251, 191, 36, 0.2)",
+              borderTop: "none",
+              borderRadius: "0 0 16px 16px",
+              padding: "30px 24px",
+              animation: "slideDown 0.3s ease",
+            }}>
             <div style={styles.commandmentsList}>
               <div style={styles.commandment}>
                 <div style={styles.commandmentNumber}>1</div>
@@ -1004,6 +1122,8 @@ export default function Aterosclerosis() {
                 </div>
               </div>
             </div>
+            </div>
+            )}
           </div>
 
           {/* Progress Tracker */}
@@ -1025,6 +1145,16 @@ export default function Aterosclerosis() {
       </footer>
 
       <style jsx>{`
+        @keyframes slideDown {
+          from { opacity: 0; max-height: 0; transform: translateY(-8px); }
+          to { opacity: 1; max-height: 5000px; transform: translateY(0); }
+        }
+
+        .expand-toggle:hover {
+          background: rgba(255, 255, 255, 0.06) !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
         @keyframes pulse {
           0%, 100% {
             transform: scale(1);

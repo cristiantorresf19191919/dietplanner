@@ -3,9 +3,56 @@
 import React, { useState, useEffect } from "react";
 import DietProgressTracker from "./DietProgressTracker";
 
+function ExpandToggle({ title, icon, isOpen, onToggle, color = "#f1f5f9" }: {
+  title: string; icon: string; isOpen: boolean; onToggle: () => void; color?: string;
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      className="expand-toggle"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        padding: "20px 24px",
+        background: "rgba(255, 255, 255, 0.03)",
+        border: "1px solid rgba(255, 255, 255, 0.08)",
+        borderRadius: isOpen ? "16px 16px 0 0" : 16,
+        color,
+        cursor: "pointer",
+        transition: "all 0.3s ease",
+        fontFamily: "'Outfit', sans-serif",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ fontSize: "1.4rem" }}>{icon}</span>
+        <span style={{ fontSize: "1.2rem", fontWeight: 700 }}>{title}</span>
+      </div>
+      <svg
+        width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+        style={{ transition: "transform 0.3s ease", transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", opacity: 0.6 }}
+      >
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
+  );
+}
+
 export default function ResistenciaInsulina() {
   const [activeSection, setActiveSection] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
+  const toggleExpand = (id: string) => {
+    setExpanded(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -942,6 +989,22 @@ export default function ResistenciaInsulina() {
             </div>
           </div>
 
+          <ExpandToggle
+            title="Plan Semanal Completo"
+            icon="📅"
+            isOpen={expanded.has("weekPlan")}
+            onToggle={() => toggleExpand("weekPlan")}
+            color="#10b981"
+          />
+          {expanded.has("weekPlan") && (
+          <div style={{
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderTop: "none",
+            borderRadius: "0 0 16px 16px",
+            padding: "30px 24px",
+            animation: "slideDown 0.3s ease",
+          }}>
           <div style={styles.weekPlan}>
             {[
               {
@@ -1055,6 +1118,8 @@ export default function ResistenciaInsulina() {
               </div>
             ))}
           </div>
+          </div>
+          )}
 
           {/* Progress Tracker */}
           <DietProgressTracker dietType="insulina" />
@@ -1110,6 +1175,22 @@ export default function ResistenciaInsulina() {
             </div>
           </div>
 
+          <ExpandToggle
+            title="Rutina de Ejercicio Semanal"
+            icon="🏋️"
+            isOpen={expanded.has("exercisePlan")}
+            onToggle={() => toggleExpand("exercisePlan")}
+            color="#3b82f6"
+          />
+          {expanded.has("exercisePlan") && (
+          <div style={{
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderTop: "none",
+            borderRadius: "0 0 16px 16px",
+            padding: "30px 24px",
+            animation: "slideDown 0.3s ease",
+          }}>
           <div style={styles.exercisePlan}>
             {[
               {
@@ -1257,6 +1338,8 @@ export default function ResistenciaInsulina() {
               </div>
             ))}
           </div>
+          </div>
+          )}
 
           <div style={styles.finalMessageBox}>
             <h3 style={styles.finalMessageTitle}>
@@ -1306,6 +1389,16 @@ export default function ResistenciaInsulina() {
       </footer>
 
       <style jsx>{`
+        @keyframes slideDown {
+          from { opacity: 0; max-height: 0; transform: translateY(-8px); }
+          to { opacity: 1; max-height: 5000px; transform: translateY(0); }
+        }
+
+        .expand-toggle:hover {
+          background: rgba(255, 255, 255, 0.06) !important;
+          border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+
         @keyframes pulse {
           0%,
           100% {
